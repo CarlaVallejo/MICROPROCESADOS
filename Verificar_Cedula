@@ -1,0 +1,60 @@
+         
+       
+String cedula;
+String dato;
+String n0;
+String n1;
+int coeficientes [] = {2, 1, 2, 1, 2, 1, 2, 1, 2};  
+int dat = 0;
+int total = 0;
+int tamCedula = 10;
+int numProv = 24;
+
+void setup() {
+Serial.begin(9600);
+Serial.println("INGRESE SU NUMERO DE CEDULA CON EL SIGNO (-) ANTES DEL ULTIMO DIGITO");
+}
+
+void loop() {
+ 
+  if(Serial.available()>0 ){ // Recibe  el dato que  vanmos  a validar
+  dato=Serial.readString(); // Lee el dato de la cedula Obtenido 
+  Serial.println(" "); 
+  n0=dato.substring(0,dato.indexOf("-"));// Realiza  el ingreso del simbolo (-)
+  n1=dato.substring(dato.indexOf("-")+1,dato.length()); 
+  cedula=(n0+n1);
+
+
+        if (cedula.length() == tamCedula) {  
+            Serial.println ("Total de digitos");
+             Serial.println (tamCedula+1);//Imprime  el valor  del  tamaño de la cedula
+             
+            int verf_1 = (cedula.substring(0,2)).toInt(); 
+            int verf_2 = (cedula.substring(2,3)).toInt();  
+          
+          
+            
+                int digRec= (cedula.substring(9,10)).toInt();  //  verificacion de cedula
+                for (int i = 0; i < 9; i++) {
+                    int valor = coeficientes[i] * (cedula.substring(i,i+1)).toInt();
+                    total = valor >= 10 ? total + (valor - 9) : total + valor;
+                }
+
+                int digObt = (total % 10) > 0 ? 10 - (total % 10) : (total % 10);
+
+                if (digObt == digRec) {
+                    Serial.println("El numero de cedula es CORRECTO");
+                    dat = -1;
+                } else {
+                    Serial.println("El numero de cedula es INCORRECTO");
+                } 
+           
+        } else {
+            Serial.println("El numero de cedula es INCORRECTO (NUMERO DE CEDULA CON EL SIGNO (-) ANTES DEL ULTIMO DIGITO");
+        }
+      
+      
+
+  }
+
+}
