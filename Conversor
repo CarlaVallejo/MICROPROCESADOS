@@ -1,0 +1,27 @@
+int ingreso=0; 
+void setup(){
+    Serial.begin(9600);
+    pinMode (8,OUTPUT);
+    Serial.println("Ingrese un numero de 0 a 1023");
+}
+
+
+void loop() {
+
+if(Serial.available()>0 ){
+ingreso=Serial.parseInt();//ingresa  el numero
+
+}
+if(ingreso>0){
+  int lectura =analogRead(A0); // lee la entrada analogica
+  Serial.println(lectura);
+  delay (400);
+  
+    if (lectura >ingreso){
+   digitalWrite(8,HIGH);
+  }
+else {
+   digitalWrite(8,LOW);
+  }
+}
+}
