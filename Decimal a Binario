@@ -1,0 +1,45 @@
+int leds[] = {13,12,11,10,9,8,7,6};
+String num;
+int bin;
+int i;
+int digito;
+void setup() {
+
+  for (i = 0; i < 8; i++) {
+    pinMode(leds[i], OUTPUT);
+    
+  }
+  Serial.begin(9600);
+}
+void loop() {
+  for ( i = 0; i < 8; i++) {
+    digitalWrite(leds[i], LOW);
+  }
+  Serial.println("Ingrese un numero entre 0-255");
+  if(Serial.available()>0) {}
+  num = Serial.readString();
+  digito=num.toInt();
+
+  if (digito == digito) {  //  el numero debe ser entero
+    if (digito >= 0 && digito <= 255) {  // el numero debe ser mayor a 0 y menor a 256
+      bin= digito;
+      for ( i = 0; i < 8; i++) { // numero de leds que deseamos enceder
+        if (bin% 2 == 1) {  // la division modular debe dar como resultado 1
+          digitalWrite(leds[i], HIGH);
+
+        }
+        else {
+          digitalWrite(leds[i], LOW);
+
+        }
+        bin= bin / 2; // se realiza la divion para dos
+      }
+
+    }
+
+    else {
+      Serial.println(" El numero ingresado no es valido");
+    }
+  }
+  delay(4000);
+}
