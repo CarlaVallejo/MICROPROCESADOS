@@ -1,0 +1,80 @@
+int valor;
+int numero;
+ int etapa =0; 
+ int i=0;
+ char dato;
+String datos;
+void setup() {
+  attachInterrupt(0,ingreso,LOW);
+  attachInterrupt(1,orden,LOW);
+ Serial.begin(9600);
+
+}
+
+void loop() {
+  if(Serial.available()>0){
+     dato=Serial.read();
+    if (isDigit(dato)){
+       Serial.println("");
+      }
+    else {
+       Serial.println("");
+       Serial.println("SOLO PUEDEN SER NUMEROS");
+      }
+  }
+
+ 
+ }
+
+void ingreso(){
+  switch (etapa){
+  case 0:
+  Serial.println("BIENVENIDOS");
+  Serial.println("Realice el ingreso de datos ");
+   Serial.println("");
+      etapa ++; //Pasara al caso 1
+    
+  break;
+  
+  case 1:
+  Serial.println("ORDENAMIENTO");
+   etapa ++;
+   orden();
+ Serial.println(valor+2);
+  break;
+  case 2:
+   Serial.println("SISTEMA APAGADO");
+  etapa=0;
+  i=0;
+  break;
+  }
+  }
+  void orden(){
+    if (etapa==1){
+      datos=String (dato);
+      int vector[datos.length()];
+      for(i=0;i<datos.length();i++){
+        int num=datos.substring(i,(i+1)).toInt();
+        vector[i]=num;
+        }
+        do {
+          
+        int option=0;
+        for (i=0;i<datos.length();i++){
+          if (vector[i]>vector[i+1]){
+            option=1;
+          int j=vector[i];
+          vector[i]=vector[i+1];
+          vector[i+1]=j;
+          }
+        }
+    while (option);{
+    for(i=0;i<datos.length();i++){
+      Serial.print(vector[i]);
+      }
+        }
+    }
+  }
+  }
+  }
+    
