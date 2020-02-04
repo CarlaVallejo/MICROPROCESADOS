@@ -1,0 +1,55 @@
+#include<MsTimer2.h>
+#include<avr/wdt.h>
+
+/*           A->1S       B->2S
+ *           C->4s       D->8S
+ */
+ 
+int segundos=0;
+String datos="";
+
+void setup() {
+  wdt_disable();
+  MsTimer2::set(1000,reloj);
+  MsTimer2::stop();
+  Serial.begin(9600);
+  Serial.println("Ingrese la letra ");  
+}
+
+void loop() {
+  
+  if(Serial.available()>0){
+  datos=Serial.readString();
+  Serial.println(" ");
+  }
+  
+   if (datos=="A"){
+      Serial.println("WDTO_1S");
+      MsTimer2::start();
+      wdt_enable(WDTO_1S);
+      datos="";
+   }
+   if (datos=="B"){
+      Serial.println("WDTO_2S");
+      MsTimer2::start();
+      wdt_enable(WDTO_2S);
+      datos="";
+   }
+   if (datos=="C"){
+      Serial.println("WDTO_4S");
+      MsTimer2::start();
+      wdt_enable(WDTO_4S);
+      datos="";
+   }
+      if (datos=="D"){
+      Serial.println("WDTO_8S");
+      MsTimer2::start();
+      wdt_enable(WDTO_8S);
+      datos="";
+    }
+}
+
+void reloj(){
+  segundos++;
+    Serial.println(segundos);
+  }
