@@ -7,7 +7,6 @@ int secondi=0;
 LiquidCrystal lcd(12, 11, 7, 6, 5, 4);
 void pin2Interrupt(void) {
   detachInterrupt(digitalPinToInterrupt(2));
-  digitalWrite(13, HIGH);
 }
 
 void enterSleep(void) {
@@ -15,7 +14,6 @@ void enterSleep(void) {
   attachInterrupt(digitalPinToInterrupt(2), pin2Interrupt, LOW);
   delay(100);
   
-  digitalWrite(13, LOW);
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);
   sleep_enable();  
   sleep_mode();
