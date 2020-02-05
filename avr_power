@@ -1,0 +1,58 @@
+#include <LiquidCrystal.h>
+#include <MsTimer2.h>
+#include<avr/power.h> //habilitar/deshabilitar perifericos
+int cont = 0;
+LiquidCrystal lcd(12, 11, 7, 6, 5, 4);
+void setup() {
+
+    Serial.begin(9600);
+     lcd.begin(16, 2);
+     lcd.setCursor(1,0);
+    lcd.print("Bienvenido");
+    delay(1000);
+  
+    
+   MsTimer2::set(1000,conteo);
+   MsTimer2::start();
+}
+
+void loop() {
+   int sensorValue = analogRead(A0);
+    lcd.setCursor(1,0);
+    lcd.print("                ");
+   lcd.setCursor(0,1);
+   lcd.print("CV:");
+    lcd.setCursor(3,8);
+   lcd.print(sensorValue);
+   delay(1); 
+   if (cont==5){
+     power_adc_disable(); 
+     lcd.setCursor(0,1);
+     lcd.print("OFF Conversor");
+    }
+      
+} 
+
+void conteo() {
+  cont++;
+ if (cont >5 && cont< 8){
+      lcd.setCursor(0,1);
+      lcd.print("CONT:          ");  
+       lcd.setCursor(6,8);
+      lcd.print(cont);        
+      }
+        if (cont==8){
+         power_usart0_disable();
+         lcd.setCursor(0,1);
+         lcd.print("                  ");
+         lcd.setCursor(1,0);
+         lcd.print("OFF Serial ");        
+      }    
+          if (cont==10){
+              power_all_disable();
+               lcd.setCursor(1,0);
+                lcd.print("                "); 
+                lcd.setCursor(0,1);
+              lcd.print("OFF System");
+        }
+}
